@@ -19,9 +19,10 @@ jobs:
           scope: '@srinivaskalagotla123'
       - run: npm install
       - run: npm run build
+      - run: mkdir -p build
       - run: |
-          echo @srinivaskalagotla123:https://npm.pkg.github.com/ > build/.npmrc
-          echo '//npm.pkg.github.com/:_authToken=${JOBBER_NPM_TOKEN}' >> build/.npmrc
+          echo @srinivaskalagotla123:https://npm.pkg.github.com/ > .npmrc
+          echo '//npm.pkg.github.com/:_authToken=${JOBBER_NPM_TOKEN}' >> .npmrc
         working-directory: ./build
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
