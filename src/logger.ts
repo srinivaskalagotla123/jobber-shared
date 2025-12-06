@@ -18,7 +18,6 @@ export const winstonLogger = (elasticsearchNode: string, name: string, level: st
         requestTimeout: 10000,
         sniffOnStart: false
       },
-      apm: false
     }
   };
   const esTransport: ElasticsearchTransport = new ElasticsearchTransport(options.elasticsearch);
