@@ -1,9 +1,9 @@
 import winston, { Logger } from 'winston';
-import { ElasticsearchTransformer, ElasticsearchTransport, LogData, TransformedData } from 'winston-elasticsearch';
+import { ElasticsearchTransport } from 'winston-elasticsearch';
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+import Agent from 'elastic-apm-node';
 
-const esTransformer = (logData: LogData): TransformedData => {
-  return ElasticsearchTransformer(logData);
-}
 
 export const winstonLogger = (elasticsearchNode: string, name: string, level: string): Logger => {
   const options = {
@@ -15,7 +15,6 @@ export const winstonLogger = (elasticsearchNode: string, name: string, level: st
     },
     elasticsearch: {
       level,
-      transformer: esTransformer,
       clientOpts: {
         node: elasticsearchNode,
         log: level,
@@ -23,6 +22,7 @@ export const winstonLogger = (elasticsearchNode: string, name: string, level: st
         requestTimeout: 10000,
         sniffOnStart: false
       },
+      apm: Agent
     }
   };
   const esTransport: ElasticsearchTransport = new ElasticsearchTransport(options.elasticsearch);
